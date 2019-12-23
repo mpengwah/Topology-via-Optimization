@@ -1,0 +1,119 @@
+1. BackTrackv2.m:
+Backtracking Algorithm with the backtracking implemented whenever an intermediate node is in consideration.
+
+2. calc_phi.m: 
+Used to calculate the variable 'phi' that is in turn used to determine whether 2 nodes are siblings or parent-child.
+The 'set' input corresponds to the active set of nodes.
+
+3. calc_phi_endingcond.m:
+NOT USED! Calculates 'phi' variable for all the nodes.
+
+4. calc_SlackBusVolt.m:
+Estimates the slack bus voltage from impedances, leaf voltages, currents and power factor.
+
+5. cmpTrueGraph.m:
+Using the 'true graph' (estimated visually from the "Comparison Between Actual and recovered...pdf".
+Uses distance metric as measurement of how different the inferred graphs (from sensitivities) are
+from the 'actual' ones.
+
+6. constraint_distance_inequality_withreactance.m:
+Function to calculate the triangle inequality constraints, for both resistance and reactances.
+
+7. create_caseFB.m:
+Given a directed graph and its ORDERING SEQUENCE, it will create a structure suitable for backward/forward sweep method.
+The structure will contain the leaf node currents and power factors. The voltage is initialised to 1.0 pu.
+
+8. create_caseFB_specialSlackBus.m:
+Creates a special structure suitable for the slack bus voltage inferrence.
+The DIFFERENCE between create_caseFB.m and create_caseFB_specialSlackBus.m is that the latter uses the actual voltages from the measurements
+(LINE 58 in CODE)
+
+9. create_directed.m:
+Creates a directed graph from an undirected one;
+
+10. CurrentSensitivity_DAYNIGHT.m:
+Uses all the measurements (day and night) to calulate sensitivities and does the bactracking + the best guess via different types of 
+errors
+Does for all the 3 phases.
+Adjust the variable 'length_profile' which determines how many samples are used in cross-checking each scenario.
+!!!!!USES MOSEK + YALMIP SOLVER
+
+11. CurrentSensitivity_NIGHT.m
+Uses only nightdata for any calculations
+!!!!!USES MOSEK + YALMIP SOLVER
+
+12. data_withTIme.mat:
+Measurements from smart meters; time-synced
+
+13. distance_matrix.m:
+Calculates distance matrix from the sensitivities
+
+14. Esimating_slackbusvoltage.m:
+Debugging version for estimating the slack bus voltage code
+
+15. extract_symmetricvals.m:
+The sensitivities are returned as a linear vector; This function will extract the resistance or reactances depending on the 'choice' variable
+ - 1: Resistance; 2: Reactances
+the number of nodes is also given as input
+
+16. graph_guesses.m:
+Plot Function that will show the network and the resistance in the same plot.
+'guess' variable alludes to best fit marker; 1 would imply the graph having the minimum error and 2 would imply the graph having the next minimum
+error and so on.
+
+17. graph_plot.m:
+Will plot the results obtained from the CurrentSensitivity_DAYNIGHT.m
+
+18. heatmap_plots.m:
+Plot several heatmaps based on the results obtained from CurrentSensitivity_DAYNIGHT.m
+
+19. MODgraph_guesses.m:
+Outputs the graph (all edges set to 1) based on the 'guess' variable (same as graph_guesses.mat)
+
+20. nightdata.mat:
+Measurements from smart meters; time-synced (NIGHT ONLY; ONLY POSITIVE CURRENTS)
+
+21. plot_heatmap.m:
+Plots the variance in the discretized graphs (all edges set to 1).
+
+22. remove_seriesNodes.m:
+Given a cluster of graphs, it is used to remove scenarios where a leaf node is an intermediate node;
+REason: A leaf node being an intermediate node would imply the same current flowing through that house and its direct successor.
+
+23. RG_ALGO.m:
+Recursive grougping algorithm with the tolerance removed.
+
+24. runBF_LF.m:
+Runs the backward/forward method until convergence is reached (node voltages are within a set tolerance)
+
+25. topo_to_sensi.m:
+From estimated graph and final distance matrices, the corresponding sensitivities are estimated
+Later its used to calculate the value of the objective.
+
+26. Topology_Check.m:
+Main Function that calls runBF_LF.m. 
+Calculates the error between estimated voltages and actual measurements.
+Calculates the error in voltage profiling (based on the distance from the slack bus)
+
+27. tree_ordering.m:
+Creates an ordered tree based on the undirected graph. Slack bus is Node number 1.
+General Rule: Parent node must have a smaller number assigned to it compared to its successor.
+
+28. variance_calc.m:
+Variance Calculation based on discretized graphs.
+
+29. variance_quadrants.m:
+plots the comparison obtained from day_night and night only data.
+
+30. voltage_profile.m:
+Calculates a discretized matrix based on the sign of the difference between pairwise voltage measurements.
+
+31. true_graphv3.mat:
+Stores the 'actual' topologies of the 3 phases (Visually estimated from "Comparison Between Actual and recovered...pdf")
+
+32. day_nightresults.mat / nightresults.mat:
+Stores results of all quadrants for all 3 phases
+
+33. sensitvity coefficient.mat:
+structure results strores the sensitvity coefficients under Sir (resistance) Six(Reactance) for 
+all quadrants for all 3 phases
